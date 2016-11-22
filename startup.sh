@@ -8,18 +8,18 @@ RUNNING_CONTAINER=$(sudo docker ps | grep $CONTAINER_NAME | awk '{print $NF}')
 
 if [ "$RUNNING_CONTAINER" ]
 	then
-	 sudo docker stop $CONTAINER_NAME
 	 echo "[Stop Container]:$CONTAINER_NAME ... "
-	 sudo docker rm $CONTAINER_NAME
+	 sudo docker stop $CONTAINER_NAME
 	 echo "[Delete Container]:$CONTAINER_NAME ... "
+	 sudo docker rm $CONTAINER_NAME
 fi
 
 #是否有之前构建的容器
 EXISTED_IMAGE=$(sudo docker images | grep $IMAGE_NAME | awk '{print $1}')
 if [ "$EXISTED_IMAGE" ]
 	then
-	 sudo docker rmi $EXISTED_IMAGE
 	 echo "[Delete IMAGE]:$EXISTED_IMAGE ... "
+	 sudo docker rmi $EXISTED_IMAGE
 fi
 
 sudo docker build -t $IMAGE_NAME . 

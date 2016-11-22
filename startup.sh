@@ -24,4 +24,3 @@ fi
 
 sudo docker build -t $IMAGE_NAME . 
 sudo docker run -d -p 8080:8080 --name $CONTAINER_NAME $IMAGE_NAME
-sudo docker attach $CONTAINER_NAME

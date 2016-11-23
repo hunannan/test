@@ -9,7 +9,7 @@ EXISTED_IMAGE=$(sudo docker images | grep $IMAGE_NAME | awk '{print $1}')
 if [ "$EXISTED_IMAGE" ]
 	then
 	 	echo "[IMAGE]:$EXISTED_IMAGE is already existed ... "
-	 	sudo docker rmi $EXISTED_IMAGE
+	 	#sudo docker rmi $EXISTED_IMAGE
 	else
 		echo "[Build Image ...]:$EXISTED_IMAGE ... "
 	    sudo docker build -t $IMAGE_NAME . 
@@ -24,7 +24,7 @@ if [[ "$RUNNING_CONTAINER" ]]
 	then  #有正在运行的容器
 	 	echo "[Stopping Container]:$CONTAINER_NAME ... "
 	 	sudo docker stop $CONTAINER_NAME
-	 	sleep 3000
+	 	sleep 3
 	 	echo "[Starting Container]:$CONTAINER_NAME ... "
 	 	sudo docker start $CONTAINER_NAME
 	 else  #所有容器是否存在

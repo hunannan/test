@@ -3,36 +3,32 @@
 IMAGE_NAME="hunan/test_web"
 CONTAINER_NAME="test_web"
 
+#是否有正在运行的container
+RUNNING_CONTAINER=$(sudo docker ps | grep $CONTAINER_NAME | awk '{print $NF}')
+
+if [ "$RUNNING_CONTAINER" ]
+	then
+		 echo "[Stop Container]:$CONTAINER_NAME ... "
+	 	 sudo docker stop $CONTAINER_NAME
+	 	 echo "[Delete Container]:$CONTAINER_NAME ... "
+	 	 sudo docker rm $CONTAINER_NAME
+	 else
+	 	ALL_CONTAINER=$(sudo docker ps -a | grep $CONTAINER_NAME | awk '{print $NF}')
+	 	if [[ "$ALL_CONTAINER" ]]; then
+	 		 echo "[Delete Container]:$CONTAINER_NAME ... "
+	 		 sudo docker rm $CONTAINER_NAME
+	 	fi
+fi
 
 #是否有之前构建的镜像
 EXISTED_IMAGE=$(sudo docker images | grep $IMAGE_NAME | awk '{print $1}')
 if [ "$EXISTED_IMAGE" ]
 	then
-	 	echo "[IMAGE]:$EXISTED_IMAGE is already existed ... "
-	 	#sudo docker rmi $EXISTED_IMAGE
-	else
-		echo "[Build Image ...]:$EXISTED_IMAGE ... "
-	    sudo docker build -t $IMAGE_NAME . 
+	 echo "[Delete IMAGE]:$EXISTED_IMAGE ... "
+	 sudo docker rmi $EXISTED_IMAGE
 fi
 
-
-#是否有正在运行的container
-RUNNING_CONTAINER=$(sudo docker ps | grep $CONTAINER_NAME | awk '{print $NF}')
-
-
-if [[ "$RUNNING_CONTAINER" ]]
-	then  #有正在运行的容器
-	 	echo "[Stopping Container]:$CONTAINER_NAME ... "
-	 	sudo docker stop $CONTAINER_NAME
-	 	sleep 3
-	 	echo "[Starting Container]:$CONTAINER_NAME ... "
-	 	sudo docker start $CONTAINER_NAME
-	 else  #所有容器是否存在
-	 	ALL_CONTAINER=$(sudo docker ps -a | grep $CONTAINER_NAME | awk '{print $NF}')
-	 	if [[ "$ALL_CONTAINER" ]]; then
-	 		echo "[Starting Container]:$CONTAINER_NAME ... "
-	 		sudo docker start $CONTAINER_NAME
-	 		else
-	 			sudo docker run -d -p 8080:8080 --name $CONTAINER_NAME $IMAGE_NAME
-	 	fi
-fi
+echo "[Building IMAGE]:$EXISTED_IMAGE ... "
+sudo docker build -t $IMAGE_NAME . 
+ echo "[Starting IMAGE]:$EXISTED_IMAGE ... "
+sudo docker run -d -p 8080:8080 --name $CONTAINER_NAME $IMAGE_NAME

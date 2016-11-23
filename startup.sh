@@ -15,7 +15,7 @@ if [ "$RUNNING_CONTAINER" ]
 	 else
 	 	ALL_CONTAINER=$(sudo docker ps -a | grep $CONTAINER_NAME | awk '{print $NF}')
 	 	if [[ "$ALL_CONTAINER" ]]; then
-	 		 echo "[Delete Container]:$CONTAINER_NAME ... "
+	 		 echo "[Deleteing Stoped Container]:$CONTAINER_NAME ... "
 	 		 sudo docker rm $CONTAINER_NAME
 	 	fi
 fi

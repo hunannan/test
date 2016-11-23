@@ -4,7 +4,7 @@ IMAGE_NAME="hunan/test_web"
 CONTAINER_NAME="test_web"
 
 #是否有正在运行的container
-RUNNING_CONTAINER=$(sudo docker ps | grep $CONTAINER_NAME | awk '{print $NF}')
+RUNNING_CONTAINER=$(sudo docker ps -a | grep $CONTAINER_NAME | awk '{print $NF}')
 
 if [ "$RUNNING_CONTAINER" ]
 	then

@@ -31,4 +31,4 @@ fi
 echo "[Building IMAGE]:$EXISTED_IMAGE ... "
 sudo docker build -t $IMAGE_NAME . 
  echo "[Starting IMAGE]:$EXISTED_IMAGE ... "
-sudo docker run -d -p 8080:8080 --name $CONTAINER_NAME $IMAGE_NAME
+sudo docker run -d -P --name $CONTAINER_NAME $IMAGE_NAME

@@ -1,2 +1,2 @@
-FROM tomat:7.0.70
+FROM tomcat:7.0.70
 ADD test.war /usr/local/tomcat/webapps/
